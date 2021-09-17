@@ -1,19 +1,18 @@
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {Dispatch} from "react";
-import { nanoid } from 'nanoid'
-import {actionsTags} from "../v4-Tag/tagsReduser";
-import {AppRootStateType} from "../store";
+import {nanoid} from 'nanoid'
+import {AppRootStateType} from "../App/store";
 
 const initialState = {
     marks: []
-} ;
+};
 
 export const mainReduser =
     (state: InitialMainStateType = initialState, action: actionsMainType): InitialMainStateType => {
         switch (action.type) {
 
             case "MAIN/CREATE-MARKS":
-                return {...state,
+                return {
+                    ...state,
                     marks: [
                         ...state.marks,
                         {
@@ -21,31 +20,37 @@ export const mainReduser =
                             name: action.name,
                             tag: action.tag.filter((it, index, arr) => index === arr.indexOf(it))
                         }
-                    ]};
+                    ]
+                };
             case "MAIN/RENAME-MARK":
-                return {...state,
+                return {
+                    ...state,
                     marks:
                         state.marks.map(m => m.id === action.id ? {
-                        ...m,
-                        name: action.nameMark,
-                        tag: action.tag.filter((it, index, arr) => index === arr.indexOf(it))
-                    } : m)
+                            ...m,
+                            name: action.nameMark,
+                            tag: action.tag.filter((it, index, arr) => index === arr.indexOf(it))
+                        } : m)
                 };
             case "MAIN/DELETE-MARK":
-                return {...state,
+                return {
+                    ...state,
                     marks: state.marks.filter(m => m.id !== action.id)
                 };
             case "MAIN/DELETE-MARK-TAG":
                 let current: MarksType[] = []
-               state.marks.map((i, index)=> {if(i.tag.includes(action.tag) && i.tag.length === 1){
-                current.push(state.marks[index])
-            }})
-                if(current){
-                    return {...state,
+                state.marks.map((i, index) => {
+                    if (i.tag.includes(action.tag) && i.tag.length === 1) {
+                        current.push(state.marks[index])
+                    }
+                })
+                if (current) {
+                    return {
+                        ...state,
                         marks: state.marks.filter(m => m !== current[current.indexOf(m)])
                     }
                 }
-               return state;
+                return state;
 
 
             default:
@@ -57,15 +62,15 @@ export const mainReduser =
 // actions
 export const actionsMain = {
 
-    createMarks: (name: string, tag: Array<string>, ) => ({
+    createMarks: (name: string, tag: Array<string>,) => ({
         type: "MAIN/CREATE-MARKS",
         name, tag
     } as const),
-    deleteMark: (id: string ) => ({
+    deleteMark: (id: string) => ({
         type: "MAIN/DELETE-MARK",
         id
     } as const),
-    deleteMarkTag: (tag: string ) => ({
+    deleteMarkTag: (tag: string) => ({
         type: "MAIN/DELETE-MARK-TAG",
         tag
     } as const),
@@ -77,7 +82,7 @@ export const actionsMain = {
 
 // thunk
 export const initializeApp = () => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
-   let data = JSON.stringify(getState())
+    let data = JSON.stringify(getState())
 };
 
 

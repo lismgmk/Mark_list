@@ -1,10 +1,8 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react";
-import {Box, Button, Grid, IconButton, Paper, TextField} from "@material-ui/core";
-import {AddBox} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
-import {actionsMain, MarksType} from "../v1-Main/mainReduser";
-import {AppRootStateType} from "../store";
-import {actionsTags} from "../v4-Tag/tagsReduser";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button, Grid, Paper, TextField} from "@material-ui/core";
+import {useDispatch} from "react-redux";
+import {actionsMain} from "../Redusers/mainReduser";
+import {actionsTags} from "../Redusers/tagsReduser";
 
 
 export type addItemFormType = {
@@ -49,8 +47,6 @@ export const InputMarks = React.memo(function (){
             addItem()
         }
     }
-
-
 
     return(
         <Paper

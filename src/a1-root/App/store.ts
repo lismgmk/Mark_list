@@ -1,9 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from "redux-thunk";
-import {mainReduser} from "./v1-Main/mainReduser";
-import {tagsReduser} from "./v4-Tag/tagsReduser";
-
-
+import {mainReduser} from "../Redusers/mainReduser";
+import {tagsReduser} from "../Redusers/tagsReduser";
 
 const rootReducer = combineReducers({
     main: mainReduser,

@@ -1,19 +1,20 @@
-
 const initialState = {
     alltags: []
-} ;
+};
 
 export const tagsReduser =
     (state: InitialTagsStateType = initialState, action: actionsTagsType): InitialTagsStateType => {
         switch (action.type) {
             case "TAGS/ADD-TAG":
                 let newArr = [...state.alltags, ...action.tag].filter((it, index, arr) => index === arr.indexOf(it))
-                return {...state,
-                    alltags: [...newArr]};
-                case "TAGS/DELETE-TAG":
                 return {
                     ...state,
-                    alltags: state.alltags.filter(i=> i !== action.tag)
+                    alltags: [...newArr]
+                };
+            case "TAGS/DELETE-TAG":
+                return {
+                    ...state,
+                    alltags: state.alltags.filter(i => i !== action.tag)
                 }
             default:
                 return state;

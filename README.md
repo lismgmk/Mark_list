@@ -1,46 +1,31 @@
-# Getting Started with Create React Profile
+Проект выслал в двух вариантах. Код и GitHub.pages.
 
-This project was bootstrapped with [Create React Profile](https://github.com/facebook/create-react-app).
+Проект сделан на React. Для запуска кода:  
+а) Скачать   
+б) утсновить библиотеки (npm i)  
+Приложение состоит из одной страницы, на ней размещены два блока: Marks list и All tags  
 
-## Available Scripts
+Для проверки работоспособности:  
+а) Функционал блока Marks list:  
+- Область для ввода заметок с тегами. Вводим значение и жмеем ADD или клавиша Enter  
+- Появляется область с новой заметкой, имеющимися тегами и кнопками "Удалить" и "Edit"  
+- Нажатие "Удалить" (Крестик) - удаляем заметку с тегами  
+- Кнопка Edit или двойной клик по области заметки - переход в "Окно редактирования"  
+- В "Окне редактирования" вводим нужные значения с тегами (все теги светятся), Для сохранения жмем "Save" или кликаем вне области.  
+- если тег удален из списка в All tags, то его можно добавить из заметки кликнув 2 раза по тегу в заметках 
 
-In the project directory, you can run:
+б) Функционал блока All tags:
+- клик по значку самого тега производит сортировку заметок по данному тегу
+- клик по "Show all Marks" показывает все существующие заметки
+- клик по крестику удаляет только тег
+- клик по "Delete with mark" удаляет сам тег и заметки с данным тегом, но при условии что в заметке нет других тегов
+- клик по "Add tag" открывает оконо ввода нового тега
+- в окне вводи новый теги и кликаем Save или жмем Enter
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Вопросы и нюансы, которые возникли при выполнении:
+1) для подсветки тегов при вводе пришлось делать кастомный input. Подругому не додумался. Есть ограничения по длинне ввода. Как сделать проще?
+2) для сохранения store в JSON файл надо написать мини сервер?
+3) Стили не стал через sass делать, так как юзал Material UI
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React Profile documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+P.S. Прошу дать фитбэек. Оч старался. Заранее спасибо)

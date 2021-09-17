@@ -1,17 +1,14 @@
 import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react'
-import s from './Main.module.css'
 import {InputMarks} from "../v2-inputMarks/InputMarks";
 import {Mark} from "../v3-Mark/Mark";
-import {Button, Card, Chip, Container, Grid, IconButton, Paper, TextField} from "@material-ui/core";
+import {Button, Chip, Container, Grid, IconButton, Paper, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../store";
-import {actionsMain, initializeApp, MarksType} from "./mainReduser";
+import {AppRootStateType} from "../App/store";
+import {actionsMain, initializeApp, MarksType} from "../Redusers/mainReduser";
 import {nanoid} from "nanoid";
-import {actionsTags} from "../v4-Tag/tagsReduser";
-import {AddBox, ClearAll} from "@material-ui/icons";
+import {actionsTags} from "../Redusers/tagsReduser";
 import {Clear} from "@material-ui/icons";
 
-import data from "./data.json";
 
 function Main() {
 
@@ -65,7 +62,6 @@ function Main() {
 
             >
 
-
                 <Paper
                     style={{
                         backgroundColor: "lightgrey",
@@ -91,7 +87,6 @@ function Main() {
                                     tag={i.tag}/>
                             })
                         }
-
 
                         {tags.length > 0 && <Button
                             onClick={showAllMarks}
@@ -131,19 +126,14 @@ function Main() {
                                     <Grid
                                         container
                                         alignItems='center'
-                                        // style={{ minWidth: 'auto'}}
-                                        // rowSpacing={1}
                                     >
                                         <Chip label={t} onClick={() => sortMarks(t)}/>
                                         <IconButton
                                             size="small"
                                             color='secondary'
                                             onClick={() => deleteTag(t)}
-                                            // // label="Delete"
-                                            // variant="contained"
                                         ><Clear/>
                                         </IconButton>
-                                        {/*Delete*/}
                                         <Button
                                             startIcon={<Clear/>}
                                             onClick={() => deleteTagWithMark(t)}
@@ -195,8 +185,6 @@ function Main() {
                                 </Grid>
 
                             </Paper>
-
-
                             :
                             <Button
                                 onClick={() => setNewTag(true)}

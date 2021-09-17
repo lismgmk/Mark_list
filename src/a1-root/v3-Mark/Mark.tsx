@@ -1,23 +1,17 @@
-import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {
-    Box,
     Button,
-    Card,
-    CardActions,
-    Checkbox,
     Chip,
     Grid,
     IconButton,
     Paper,
-    TextField,
     Typography
 } from "@material-ui/core";
-import {AddBox, Clear, Delete} from "@material-ui/icons";
-import {actionsMain, MarksType} from "../v1-Main/mainReduser";
-import {useDispatch, useSelector} from "react-redux";
-import {actionsTags} from "../v4-Tag/tagsReduser";
+import {Clear} from "@material-ui/icons";
+import {actionsMain} from "../Redusers/mainReduser";
+import {useDispatch} from "react-redux";
+import {actionsTags} from "../Redusers/tagsReduser";
 import {getTag} from "../v2-inputMarks/InputMarks";
-import {AppRootStateType} from "../store";
 import style from "./Mark.module.css"
 import {nanoid} from "nanoid";
 
@@ -30,8 +24,6 @@ type MarkType = {
 export const Mark = React.memo(function (props: MarkType) {
 
     const dispatch = useDispatch()
-
-
     const [title, setTitle] = useState<string>(props.name)
     const [titleKey, setTitleKey] = useState<string>(props.name)
     const [changeInput, setChangeInput] = useState<boolean>(false)
@@ -60,8 +52,6 @@ export const Mark = React.memo(function (props: MarkType) {
             }
         })
     }
-
-
     const onChangeSpan = () => setChangeInput(true);
     const onChangeInput = () => {
         setChangeInput(false)
@@ -85,9 +75,7 @@ export const Mark = React.memo(function (props: MarkType) {
                 padding: 20
             }}
         >
-            <Grid
-
-            >
+            <Grid>
                 {
                     changeInput
                         ?
@@ -115,7 +103,7 @@ export const Mark = React.memo(function (props: MarkType) {
                                 variant="h5"
                                 component="div"
                                 className={style.customDiv}
-                            style={{height: 'fit-content'}}
+                                style={{height: 'fit-content'}}
                             >
                                 {getColorTitle(titleKey)}
                             </Typography>
@@ -128,25 +116,23 @@ export const Mark = React.memo(function (props: MarkType) {
                                 }}>Save
                             </Button>
                         </Grid>
-
-
                         : <Grid
                             container
                             direction='column'
                             alignItems={'center'}
                             justifyContent={'space-between'}
                         >
-                        <Grid item
-                        container
-                        >
-                            <Grid item>
-                                <Typography className={style.customDiv}
-                                            variant="h5"
-                                            component="div"
-                                            onDoubleClick={onChangeSpan}
-                                >{title}
-                                </Typography>
-                            </Grid>
+                            <Grid item
+                                  container
+                            >
+                                <Grid item>
+                                    <Typography className={style.customDiv}
+                                                variant="h5"
+                                                component="div"
+                                                onDoubleClick={onChangeSpan}
+                                    >{title}
+                                    </Typography>
+                                </Grid>
 
                                 <IconButton
                                     color='secondary'
@@ -165,7 +151,7 @@ export const Mark = React.memo(function (props: MarkType) {
                                     }}>Edit
                                 </Button>
 
-                        </Grid>
+                            </Grid>
 
                             <Grid item>
                                 {props.tag.map(i => {
@@ -176,12 +162,10 @@ export const Mark = React.memo(function (props: MarkType) {
                                     />
                                 })}
                             </Grid>
-
-
                         </Grid>
                 }
             </Grid>
         </Paper>
 
     )
-});
+})
