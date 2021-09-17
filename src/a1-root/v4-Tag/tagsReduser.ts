@@ -34,19 +34,6 @@ export const actionsTags = {
     } as const),
 };
 
-// export const addTitle = (title: string) => (dispatch: Dispatch<any>) => {
-//     const trimmedTitle = title.trim()
-//     let valueInput = trimmedTitle.split(/(#[a-z\d-]+)/ig)
-//
-//     let tag: string[] = []
-//     valueInput.map((i, index)=>{
-//         if(index % 2 !== 0){
-//             tag.push(i.replace('#',''))
-//         }
-//     })
-// };
-
-
 
 // types
 export type InitialTagsStateType = {

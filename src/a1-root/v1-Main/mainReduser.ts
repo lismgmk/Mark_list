@@ -2,6 +2,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {Dispatch} from "react";
 import { nanoid } from 'nanoid'
 import {actionsTags} from "../v4-Tag/tagsReduser";
+import {AppRootStateType} from "../store";
 
 const initialState = {
     marks: []
@@ -18,7 +19,7 @@ export const mainReduser =
                         {
                             id: nanoid(),
                             name: action.name,
-                            tag: action.tag
+                            tag: action.tag.filter((it, index, arr) => index === arr.indexOf(it))
                         }
                     ]};
             case "MAIN/RENAME-MARK":
@@ -27,7 +28,7 @@ export const mainReduser =
                         state.marks.map(m => m.id === action.id ? {
                         ...m,
                         name: action.nameMark,
-                        tag: action.tag
+                        tag: action.tag.filter((it, index, arr) => index === arr.indexOf(it))
                     } : m)
                 };
             case "MAIN/DELETE-MARK":
@@ -35,13 +36,13 @@ export const mainReduser =
                     marks: state.marks.filter(m => m.id !== action.id)
                 };
             case "MAIN/DELETE-MARK-TAG":
-                debugger
-                let current = state.marks.map(i=> {if (i.tag[0] === action.tag){
-                    return i.tag
+                let current: MarksType[] = []
+               state.marks.map((i, index)=> {if(i.tag.includes(action.tag) && i.tag.length === 1){
+                current.push(state.marks[index])
             }})
-                if(current.length === 1){
+                if(current){
                     return {...state,
-                        marks: state.marks.filter(m => m.tag[0] !== action.tag)
+                        marks: state.marks.filter(m => m !== current[current.indexOf(m)])
                     }
                 }
                return state;
@@ -74,7 +75,9 @@ export const actionsMain = {
     } as const)
 };
 
-
+export const initializeApp = () => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+   console.log(JSON.stringify(getState()))
+};
 
 
 // types
