@@ -75,8 +75,9 @@ export const actionsMain = {
     } as const)
 };
 
+// thunk
 export const initializeApp = () => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
-   console.log(JSON.stringify(getState()))
+   let data = JSON.stringify(getState())
 };
 
 

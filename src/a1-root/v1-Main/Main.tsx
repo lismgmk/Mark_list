@@ -2,13 +2,14 @@ import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react'
 import s from './Main.module.css'
 import {InputMarks} from "../v2-inputMarks/InputMarks";
 import {Mark} from "../v3-Mark/Mark";
-import {Card, Container, Grid, IconButton} from "@material-ui/core";
+import {Button, Card, Chip, Container, Grid, IconButton, Paper, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store";
 import {actionsMain, initializeApp, MarksType} from "./mainReduser";
 import {nanoid} from "nanoid";
 import {actionsTags} from "../v4-Tag/tagsReduser";
-import {AddBox} from "@material-ui/icons";
+import {AddBox, ClearAll} from "@material-ui/icons";
+import {Clear} from "@material-ui/icons";
 
 import data from "./data.json";
 
@@ -20,7 +21,6 @@ function Main() {
     const [currentmarks, setCurrentmarks] = useState<Array<MarksType>>(marks)
     const [newTag, setNewTag] = useState<boolean>(false)
     const [valueNewTag, setValueNewTag] = useState<string>('')
-
 
 
     useEffect(() => {
@@ -49,8 +49,8 @@ function Main() {
         dispatch(actionsTags.addTags([valueNewTag]))
         setNewTag(false)
     }
-    const onKeyPressAddItem = (e : KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === 'Enter'){
+    const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
             addNewTag()
         }
     }
@@ -64,7 +64,7 @@ function Main() {
             {
                 currentmarks.map(i => {
                     return <Mark
-                        key={i.id}
+                        key={nanoid()}
                         name={i.name}
                         id={i.id}
                         tag={i.tag}/>
@@ -72,46 +72,113 @@ function Main() {
             }
             {
                 tags.map(t => {
-                    return <div
+                    return <Paper
                         key={nanoid()}
-                        style={{background: 'gray', padding: '5px'}}
+                        style={{
+                            background: 'gray',
+                            padding: '5px',
+                            width: "fit-content",
+                            margin: "10px"
+                        }}
                     >
-                        {t}
-                        <button onClick={() => deleteTag(t)}
-                        >Delete tag
-                        </button>
-                        <button onClick={() => deleteTagWithMark(t)}
-                        >Delete tag with mark
-                        </button>
+                        <Grid
+                            container
+                            alignItems='center'
+                            // style={{ minWidth: 'auto'}}
+                            // rowSpacing={1}
+                        >
+                            <Chip label={t} onClick={() => sortMarks(t)}/>
+                            <IconButton
+                                size="small"
+                                color='secondary'
+                                onClick={() => deleteTag(t)}
+                                // // label="Delete"
+                                // variant="contained"
+                            ><Clear/>
+                            </IconButton>
+                            {/*Delete*/}
+                            <Button
+                                startIcon={<Clear/>}
+                                onClick={() => deleteTagWithMark(t)}
+                                variant="contained"
+                                size="small"
+                                color='secondary'
+                            >Delete with mark
+                            </Button>
 
-                        <button onClick={() => {
-                            sortMarks(t)
-                        }
-                        }
-                        >Sort for Tag
-                        </button>
-
-                    </div>
+                            {/*<Button onClick={() => sortMarks(t)}*/}
+                            {/*        variant="contained"*/}
+                            {/*        size="small"*/}
+                            {/*        color='primary'*/}
+                            {/*>Sort for Tag*/}
+                            {/*</Button>*/}
+                        </Grid>
+                    </Paper>
                 })
             }
-            {tags.length > 0 && <button
+            {/*<Grid*/}
+            {/*    container*/}
+            {/*    alignItems='center'*/}
+            {/*    justifyContent='space-around'*/}
+            {/*    style={{ width: 500, height: 50}}*/}
+            {/*>*/}
+            {tags.length > 0 && <Button
                 onClick={showAllMarks}
-            >Show all Marks</button>}
+                variant="contained"
+                size="medium"
+                color='primary'
+            >Show all Marks</Button>}
 
             {newTag ?
-                <input
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setValueNewTag(e.currentTarget.value)
-                    }
-                    }
-                    onBlur={addNewTag}
-                    onKeyPress={onKeyPressAddItem}
-                />
-                :
-                < IconButton onClick={() => setNewTag(true)} color={'primary'}>
-                    <AddBox/>
-                </IconButton>}
+                <Paper
+                    style={{
+                        width: 300,
+                        backgroundColor: "lightgrey",
+                        padding: "5px",
+                        margin: "10px"
+                    }}
 
+                >
+                    <Grid item
+                          container
+                          alignItems={'center'}
+                          justifyContent={'space-between'}
+                    >
+                        <TextField
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                setValueNewTag(e.currentTarget.value)
+                            }
+                            }
+                            onBlur={addNewTag}
+                            onKeyPress={onKeyPressAddItem}
+                            label="Enter tag"
+                            variant="outlined"
+                            style={{width: '110'}}
+                            size={'small'}
+                        />
+                        <Button
+                            onClick={() => addNewTag()}
+                            color={'primary'}
+                            variant="outlined"
+                            size="small"
+                        >
+                            Save
+                        </Button>
+                    </Grid>
+
+                </Paper>
+
+
+                :
+                <Button
+                    onClick={() => setNewTag(true)}
+                    color={'primary'}
+                    variant="contained"
+                    size="medium"
+                >
+                    Add Tag
+                </Button>}
+            {/*</Grid>*/}
         </Container>
     )
 }

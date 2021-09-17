@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from "react";
-import {IconButton, TextField} from "@material-ui/core";
+import {Box, Button, Grid, IconButton, Paper, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {actionsMain, MarksType} from "../v1-Main/mainReduser";
@@ -53,16 +53,34 @@ export const InputMarks = React.memo(function (){
 
 
     return(
-        <div>
-            <input
-                value={title}
-                onChange={changeTitle}
-                onKeyPress={onKeyPressAddItem}
-            />
-            <IconButton onClick = {addItem} color={'primary'}>
-                <AddBox/>
-            </IconButton>
-        </div>
+        <Paper
+            style={{ width: 500, height: 100, backgroundColor: "lightgrey" }}
+        >
+            <Grid
+                container
+                alignItems='center'
+                justifyContent='space-around'
+                style={{ width: 500, height: 100}}
+            >
+                <TextField
+                    value={title}
+                    onChange={changeTitle}
+                    onKeyPress={onKeyPressAddItem}
+                    label="Enter your mark"
+                    variant="outlined"
+                    style={{width: 350}}
+                    helperText="To add press the button or key 'Enter'"
+                />
+                <Button onClick = {addItem}
+                        variant="contained"
+                        size="medium"
+                        color='primary'
+                >
+                    Add
+                </Button>
+            </Grid>
+        </Paper>
+
     )
 })
 

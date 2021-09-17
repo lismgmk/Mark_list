@@ -7,6 +7,7 @@ import {actionsTags} from "../v4-Tag/tagsReduser";
 import {getTag} from "../v2-inputMarks/InputMarks";
 import {AppRootStateType} from "../store";
 import style from "./Mark.module.css"
+import {nanoid} from "nanoid";
 
 type MarkType = {
     name: string
@@ -42,9 +43,9 @@ export const Mark = React.memo(function (props: MarkType) {
 
         return  valueInput.map((i, index) => {
             if(index % 2 ===0){
-                return  <span style={{color:'black'}}>{i}</span>
+                return  <span key={nanoid()} style={{color:'black'}}>{i}</span>
             } else{
-                return <span style={{color:'red'}}>{i}</span>
+                return <span key={nanoid()} style={{color:'red'}}>{i}</span>
             }
         })
     }
@@ -65,7 +66,6 @@ export const Mark = React.memo(function (props: MarkType) {
     }
     return (
         <div
-            key={props.id}
             className={style.containerCustom}>
             {
                 changeInput
@@ -102,6 +102,7 @@ export const Mark = React.memo(function (props: MarkType) {
                         <div>
                             {props.tag.map(i => {
                                 return <span
+                                    key={nanoid()}
                                     style={{background: 'green', marginTop: '10px'}}
                                     onDoubleClick={() => dispatch(actionsTags.addTags([i]))}
                                 > {i}</span>
