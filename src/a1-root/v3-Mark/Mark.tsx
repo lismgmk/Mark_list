@@ -1,6 +1,18 @@
 import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
-import {Box, Button, Card, CardActions, Checkbox, Grid, IconButton, Paper, TextField} from "@material-ui/core";
-import {AddBox, Delete} from "@material-ui/icons";
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    Checkbox,
+    Chip,
+    Grid,
+    IconButton,
+    Paper,
+    TextField,
+    Typography
+} from "@material-ui/core";
+import {AddBox, Clear, Delete} from "@material-ui/icons";
 import {actionsMain, MarksType} from "../v1-Main/mainReduser";
 import {useDispatch, useSelector} from "react-redux";
 import {actionsTags} from "../v4-Tag/tagsReduser";
@@ -18,7 +30,6 @@ type MarkType = {
 export const Mark = React.memo(function (props: MarkType) {
 
     const dispatch = useDispatch()
-    const tags = useSelector<AppRootStateType, Array<string>>(state => state.tag.alltags);
 
 
     const [title, setTitle] = useState<string>(props.name)
@@ -41,11 +52,11 @@ export const Mark = React.memo(function (props: MarkType) {
 
         let valueInput = title.split(/(#[a-z\d-]+)/ig)
 
-        return  valueInput.map((i, index) => {
-            if(index % 2 ===0){
-                return  <span key={nanoid()} style={{color:'black'}}>{i}</span>
-            } else{
-                return <span key={nanoid()} style={{color:'red'}}>{i}</span>
+        return valueInput.map((i, index) => {
+            if (index % 2 === 0) {
+                return <span key={nanoid()} style={{color: 'black'}}>{i}</span>
+            } else {
+                return <span key={nanoid()} style={{color: 'red'}}>{i}</span>
             }
         })
     }
@@ -56,7 +67,6 @@ export const Mark = React.memo(function (props: MarkType) {
         setChangeInput(false)
 
         const trimmedTitle = title.trim()
-        // setTitleKey(getColorTitle(trimmedTitle))
         let tag = getTag(trimmedTitle)
         if (trimmedTitle) {
             dispatch(actionsMain.updateMark(trimmedTitle, props.id, tag))
@@ -65,62 +75,113 @@ export const Mark = React.memo(function (props: MarkType) {
 
     }
     return (
-        <div
-            className={style.containerCustom}>
-            {
-                changeInput
-                    ?
-                    <div
-                        style={{
-                            position: "relative",
-                            width: '550px',
-                            height: '15px',
-                        }}
-                    >
-                        <input
-                            className={style.customInput}
-                            value={title}
-                            onBlur={onChangeInput}
-                            onChange={changeTitle}
-                            onKeyPress={onKeyPressAddItem}
-                            onKeyPressCapture={(e) => setTitleKey(e.currentTarget.value)}
-                        />
+        <Paper
+            className={style.containerCustom}
+            style={{
+                backgroundColor: 'darkkhaki',
+                margin: 20,
+                width: 'fit-content',
+                height: 'fit-content',
+                padding: 20
+            }}
+        >
+            <Grid
 
-                        <div className={style.customDiv}>{getColorTitle(titleKey)}</div>
-                        <button onClick={() => {
-                            onChangeInput()
-                        }}>Save
-                        </button>
-                    </div>
+            >
+                {
+                    changeInput
+                        ?
+                        <Grid
+                            container
+                            // direction='column'
+                            alignItems={'center'}
+                            justifyContent={'space-between'}
+                            style={{
+                                position: "relative",
+                                width: 'fit-content',
+                                height: 'fit-content'
+                            }}
+                        >
+                            <input
+                                className={style.customInput}
+                                value={title}
+                                onBlur={onChangeInput}
+                                onChange={changeTitle}
+                                onKeyPress={onKeyPressAddItem}
+                                onKeyPressCapture={(e) => setTitleKey(e.currentTarget.value)}
+                            />
+
+                            <Typography
+                                variant="h5"
+                                component="div"
+                                className={style.customDiv}
+                            style={{height: 'fit-content'}}
+                            >
+                                {getColorTitle(titleKey)}
+                            </Typography>
+                            <Button
+                                color={'primary'}
+                                variant="outlined"
+                                size="small"
+                                onClick={() => {
+                                    onChangeInput()
+                                }}>Save
+                            </Button>
+                        </Grid>
 
 
-                    : <div>
-                            <span className={style.customDiv}
-                                onDoubleClick={onChangeSpan}
-                            >{title}
-                            </span>
-                        <div>
-                            {props.tag.map(i => {
-                                return <span
-                                    key={nanoid()}
-                                    style={{background: 'green', marginTop: '10px'}}
-                                    onDoubleClick={() => dispatch(actionsTags.addTags([i]))}
-                                > {i}</span>
-                            })}
-                        </div>
-                        <button onClick={() => {
-                            dispatch(actionsMain.deleteMark(props.id))
-                        }}>Delete
-                        </button>
-                        <button onClick={() => {
-                            setChangeInput(true)
-                        }}>Edit
-                        </button>
+                        : <Grid
+                            container
+                            direction='column'
+                            alignItems={'center'}
+                            justifyContent={'space-between'}
+                        >
+                        <Grid item
+                        container
+                        >
+                            <Grid item>
+                                <Typography className={style.customDiv}
+                                            variant="h5"
+                                            component="div"
+                                            onDoubleClick={onChangeSpan}
+                                >{title}
+                                </Typography>
+                            </Grid>
+
+                                <IconButton
+                                    color='secondary'
+                                    size="small"
+                                    style={{margin: 5}}
+                                    onClick={() => {
+                                        dispatch(actionsMain.deleteMark(props.id))
+                                    }}><Clear/>
+                                </IconButton>
+                                <Button
+                                    color={'primary'}
+                                    variant="outlined"
+                                    size="small"
+                                    onClick={() => {
+                                        setChangeInput(true)
+                                    }}>Edit
+                                </Button>
+
+                        </Grid>
+
+                            <Grid item>
+                                {props.tag.map(i => {
+                                    return <Chip label={i}
+                                                 key={nanoid()}
+                                                 style={{margin: 10}}
+                                                 onDoubleClick={() => dispatch(actionsTags.addTags([i]))}
+                                    />
+                                })}
+                            </Grid>
 
 
-                    </div>
-            }
-        </div>
+                        </Grid>
+                }
+            </Grid>
+        </Paper>
 
     )
 });

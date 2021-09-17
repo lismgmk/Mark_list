@@ -54,13 +54,18 @@ export const InputMarks = React.memo(function (){
 
     return(
         <Paper
-            style={{ width: 500, height: 100, backgroundColor: "lightgrey" }}
+            style={{
+                width: 500,
+                height: 100,
+                backgroundColor: "lightgrey",
+                marginBottom: 20
+            }}
         >
             <Grid
                 container
                 alignItems='center'
                 justifyContent='space-around'
-                style={{ width: 500, height: 100}}
+                style={{ width: 500, height: 100, backgroundColor: 'darkkhaki'}}
             >
                 <TextField
                     value={title}

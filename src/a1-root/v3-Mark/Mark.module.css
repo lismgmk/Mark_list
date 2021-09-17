@@ -5,17 +5,20 @@
     background-color: rgba(0,0,0,0);
     color:  rgba(0,0,0,0);
     caret-color: black;
-    font-size: 18px;
-    width: 500px;
-    height: 25px;
+    font-size: 1.5rem;
+    width: 800px;
     position: absolute;
     z-index: 3;
+    height: fit-content;
+    /*margin: 10px;*/
 }
 
 .customDiv{
     font-size: 18px;
-    width: 500px;
-    height: 25px;
+    width: 800px;
+    height: 40px;
+    border-bottom: 1px solid black;
+    /*margin: 10px;*/
 }
 
 .containerCustom{
